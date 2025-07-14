@@ -20,6 +20,10 @@ class DiffusionEdgeDetector:
         self.model.to(device)
         self.device = device
         return self
+
+    def state_dict(self, *args, **kwargs):
+        """Return state dict of the underlying model for Comfy's model management."""
+        return self.model.state_dict(*args, **kwargs)
     
     def __call__(self, input_image, detect_resolution=512, patch_batch_size=8, output_type=None, upscale_method="INTER_CUBIC", **kwargs):
         input_image, output_type = common_input_validate(input_image, output_type, **kwargs)
@@ -38,3 +42,4 @@ class DiffusionEdgeDetector:
             detected_map = Image.fromarray(detected_map)
             
         return detected_map
+
